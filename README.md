@@ -9,6 +9,8 @@ A Unified API Response is essentially a standardized format for the responses ge
 ## Implementing Unified API Responses in .NET
 
 ### Error Class
+- which encapsulates the message.
+- You can easily change from String to Error and vice versa using Implicit Conversion.
 ```csharp
 public class Error
 {
@@ -27,6 +29,7 @@ public class Error
 }
 ```
 ### Result Class
+- will serve as the response object.
 ```csharp
 public class Result
 {
@@ -49,6 +52,7 @@ public class Result
 }
 ```
 ### Generic Result Class
+- Contains Property Called Data Which Return Result with Data
 ```csharp
 public class Result<T> : Result
 {
@@ -60,7 +64,8 @@ public class Result<T> : Result
     }
 }
 ```
-### Match Extention Metod based on Result Class To to handle the success and failure cases 
+### Match Method 
+- Extention Metod based on Result Class To to handle the Success and Failure Cases 
 ```csharp
 public static class ResultExtensions
 {
@@ -68,7 +73,9 @@ public static class ResultExtensions
                              Func<T> onSuccess,
                              Func<Error, T> onFailure)
     {
-        return result.IsSuccess ? onSuccess() : onFailure(result.Error);
+        return result.IsSuccess ?
+               onSuccess() :
+               onFailure(result.Error);
     }
 }
 ```
